@@ -26,7 +26,7 @@ import java.util.concurrent.Executor
  * @description:
  */
 
-class AsyncIPoster(private val mSocketClient: SocketClient, private val mExecutor: Executor) : Runnable, IPoster {
+class AsyncPoster(private val mSocketClient: SocketClient, private val mExecutor: Executor) : Runnable, IPoster {
 
     private val queue: PendingPostQueue = PendingPostQueue()
 

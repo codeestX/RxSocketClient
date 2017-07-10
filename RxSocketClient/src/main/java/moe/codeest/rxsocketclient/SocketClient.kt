@@ -21,9 +21,9 @@ import moe.codeest.rxsocketclient.meta.DataWrapper
 import moe.codeest.rxsocketclient.meta.SocketConfig
 import moe.codeest.rxsocketclient.meta.SocketOption
 import moe.codeest.rxsocketclient.meta.ThreadStrategy
-import moe.codeest.rxsocketclient.post.AsyncIPoster
+import moe.codeest.rxsocketclient.post.AsyncPoster
 import moe.codeest.rxsocketclient.post.IPoster
-import moe.codeest.rxsocketclient.post.SyncIPoster
+import moe.codeest.rxsocketclient.post.SyncPoster
 import java.net.Socket
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
@@ -50,7 +50,7 @@ class SocketClient(val mConfig: SocketConfig) {
 
     fun connect(): Observable<DataWrapper> {
         mObservable = SocketObservable(mConfig, mSocket)
-        mIPoster = if (mConfig.mThreadStrategy == ThreadStrategy.ASYNC) AsyncIPoster(this, mExecutor) else SyncIPoster(this, mExecutor)
+        mIPoster = if (mConfig.mThreadStrategy == ThreadStrategy.ASYNC) AsyncPoster(this, mExecutor) else SyncPoster(this, mExecutor)
         initHeartBeat()
         return mObservable
     }
@@ -66,7 +66,7 @@ class SocketClient(val mConfig: SocketConfig) {
             if (mHeartBeatConfig != null) {
             val disposable = Observable.interval(mHeartBeatConfig.interval, TimeUnit.MILLISECONDS)
                         .subscribe({
-                            sendData(mHeartBeatConfig.data?: ByteArray(0))
+                            mIPoster.enqueue(mHeartBeatConfig.data?: ByteArray(0))
                         })
                 if (mObservable is SocketObservable) {
                     (mObservable as SocketObservable).setHeartBeatRef(disposable)

@@ -31,7 +31,7 @@ public class JavaActivity extends AppCompatActivity implements View.OnClickListe
     private static final String TAG = "JavaActivity";
 
     private static final String IP = "192.168.1.101";
-    private static final int PORT = 8080;
+    private static final int PORT = 55731;
     private static final byte[] HEART_BEAT = {1, 3, 4};
     private static final byte[] HEAD = {1, 2};
     private static final byte[] TAIL = {5, 7};

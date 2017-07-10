@@ -1,8 +1,3 @@
-package moe.codeest.rxsocketclient.post
-
-import moe.codeest.rxsocketclient.SocketClient
-import java.util.concurrent.Executor
-
 /*
  * Copyright (C) 2017 codeestX
  *
@@ -19,13 +14,18 @@ import java.util.concurrent.Executor
  * limitations under the License.
  */
 
+package moe.codeest.rxsocketclient.post
+
+import moe.codeest.rxsocketclient.SocketClient
+import java.util.concurrent.Executor
+
 /**
  * @author: Est <codeest.dev@gmail.com>
  * @date: 2017/7/9
  * @description:
  */
 
-class SyncIPoster(private val mSocketClient: SocketClient, private val mExecutor: Executor) : Runnable, IPoster {
+class SyncPoster(private val mSocketClient: SocketClient, private val mExecutor: Executor) : Runnable, IPoster {
 
     private val queue: PendingPostQueue = PendingPostQueue()
 
