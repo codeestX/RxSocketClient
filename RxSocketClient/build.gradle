@@ -1,6 +1,11 @@
 apply plugin: 'java-library'
 apply plugin: 'kotlin'
 
+// JitPack Maven
+apply plugin: 'com.github.dcendents.android-maven'
+// Group
+group='com.github.codeestX'
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"

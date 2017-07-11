@@ -99,4 +99,8 @@ class SocketClient(val mConfig: SocketConfig) {
     fun sendData(string: String) {
         sendData(string.toByteArray(charset = mConfig.mCharset))
     }
+
+    fun isConnecting(): Boolean {
+        return mSocket.isConnected
+    }
 }

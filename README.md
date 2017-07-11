@@ -40,25 +40,33 @@ SocketClient mClient = RxSocketClient
 ### connect
 ```java
 Disposable ref = mClient.connect()
-						... // anything else what you can do with RxJava
+			... // anything else what you can do with RxJava
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SocketSubscriber() {
                     @Override
                     public void onConnected() {
+                    	//onConnected
                         Log.e(TAG, "onConnected");
                     }
 
                     @Override
                     public void onDisconnected() {
+                    	//onDisconnected
                         Log.e(TAG, "onDisconnected");
                     }
 
                     @Override
                     public void onResponse(@NotNull byte[] data) {
-                    	// receive data
+                    	//receive data
                         Log.e(TAG, Arrays.toString(data));
                     }
-                });
+                }, new Consumer<Throwable>() {
+						   @Override
+						   public void accept(Throwable throwable) throws Exception {
+						      //onError
+						       Log.e(TAG, throwable.toString());
+						   }
+					  });
 ```
 
 ### disconnect

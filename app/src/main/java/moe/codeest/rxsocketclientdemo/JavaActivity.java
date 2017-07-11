@@ -13,6 +13,7 @@ import java.util.Arrays;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import kotlin.text.Charsets;
 import moe.codeest.rxsocketclient.RxSocketClient;
 import moe.codeest.rxsocketclient.SocketClient;
@@ -81,11 +82,13 @@ public class JavaActivity extends AppCompatActivity implements View.OnClickListe
                 .subscribe(new SocketSubscriber() {
                     @Override
                     public void onConnected() {
+                        //onConnected
                         Log.e(TAG, "onConnected");
                     }
 
                     @Override
                     public void onDisconnected() {
+                        //onDisconnected
                         Log.e(TAG, "onDisconnected");
                         //re-connect
 //                        connect();
@@ -93,8 +96,15 @@ public class JavaActivity extends AppCompatActivity implements View.OnClickListe
 
                     @Override
                     public void onResponse(@NotNull byte[] data) {
+                        //receive data
                         Log.e(TAG, Arrays.toString(data));
                         tvReceive.setText(Arrays.toString(data));
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        //onError
+                        Log.e(TAG, throwable.toString());
                     }
                 });
     }
