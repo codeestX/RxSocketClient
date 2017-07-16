@@ -58,9 +58,7 @@ public class JavaActivity extends AppCompatActivity implements View.OnClickListe
         btnSend.setOnClickListener(this);
         btnConnect.setOnClickListener(this);
         btnDisConnect.setOnClickListener(this);
-    }
 
-    private void connect() {
         //init
         mClient = RxSocketClient
                 .create(new SocketConfig.Builder()
@@ -75,7 +73,9 @@ public class JavaActivity extends AppCompatActivity implements View.OnClickListe
                         .setHead(HEAD)
                         .setTail(TAIL)
                         .build());
+    }
 
+    private void connect() {
         //connect
         ref = mClient.connect()
                 .observeOn(AndroidSchedulers.mainThread())
@@ -107,6 +107,12 @@ public class JavaActivity extends AppCompatActivity implements View.OnClickListe
                         Log.e(TAG, throwable.toString());
                     }
                 });
+    }
+
+    public void connect(SocketSubscriber subscriber) {
+        ref = mClient.connect()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
     }
 
     @Override
