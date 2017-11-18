@@ -133,7 +133,9 @@ public class JavaActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.btn_disconnect:
                 //disconnect
-                mClient.disconnect();
+                if (mClient.isConnecting()) {
+                    mClient.disconnect();
+                }
 
                 //or disconnect
 //                ref.dispose();
