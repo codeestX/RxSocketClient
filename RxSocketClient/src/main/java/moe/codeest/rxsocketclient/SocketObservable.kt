@@ -44,16 +44,16 @@ class SocketObservable(val mConfig: SocketConfig, val mSocket: Socket) : Observa
         observerWrapper = SocketObserver(observer)
         observer?.onSubscribe(observerWrapper)
 
-        try {
-            Thread(Runnable {
-                mSocket.connect(InetSocketAddress(mConfig.mIp, mConfig.mPort?: 1080), mConfig.mTimeout?: 0)
+        Thread(Runnable {
+            try {
+                mSocket.connect(InetSocketAddress(mConfig.mIp, mConfig.mPort ?: 1080), mConfig.mTimeout ?: 0)
                 observer?.onNext(DataWrapper(SocketState.OPEN, ByteArray(0)))
                 mReadThread.start()
-            }).start()
-        } catch (e: IOException) {
-            println(e.toString())
-            observer?.onNext(DataWrapper(SocketState.CLOSE, ByteArray(0)))
-        }
+            } catch (e: IOException) {
+                println(e.toString())
+                observer?.onNext(DataWrapper(SocketState.CLOSE, ByteArray(0)))
+            }
+        }).start()
     }
 
     fun setHeartBeatRef(ref: Disposable) {
@@ -102,7 +102,7 @@ class SocketObservable(val mConfig: SocketConfig, val mSocket: Socket) : Observa
                         observerWrapper.onNext(buffer)
                     }
                 }
-            }catch (e: Exception) {
+            } catch (e: Exception) {
 
             }
         }
